@@ -29,15 +29,20 @@ public:
 		}
 		return s_m[id];
 	}
-	smart_array& operator=(const smart_array& other) {		
-		return *this = smart_array(other);
+
+	smart_array(const smart_array& other) {
+		*this = other;
 	}
 
-	smart_array(const smart_array& other)
-		: smart_array(*other.s_m) {}
+	smart_array& operator=(const smart_array& other) {	
+		delete s_m;
+		if (other.s_m == nullptr)s_m = nullptr;
+		else s_m = new int(*other.s_m);
+		return *this;
+	}
 
 	~smart_array() {
-		delete[] s_m;
+		delete s_m;
 	}
 private:
 	int* s_m = nullptr;
