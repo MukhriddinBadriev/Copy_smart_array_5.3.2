@@ -4,49 +4,47 @@
 class smart_array {
 public:
 	smart_array(int size) {
-		size_ = size;
-		s_m = new int[size_];
-		capacity = size_;
+		s_m = new int[size];
+		capacity = size;
 	}
+
 	int add_element(int element) {
-		if (size_ == capacity) capacity *= 2;
-		else if (size_ < capacity) {
-			int* tmp = new int[size_];
-			for (int j = 0; j < size_; ++j) {
+		if (i == capacity) {
+			capacity *= 2;
+			int* tmp = new int[capacity];
+			for (int j = 0; j < i; j++) {
 				tmp[j] = s_m[j];
 			}
 			delete[]s_m;
 			s_m = tmp;
-			++size_;
 		}
-		s_m[i] = element;
-		i++;
+		if (i < capacity) {
+			s_m[i] = element;
+			i++;
+		}
+
 		return element;
 	}
+
+	smart_array& operator=(const smart_array& other) {
+		delete s_m;
+		if (other.s_m == nullptr)s_m = nullptr;
+		else s_m = new int(capacity);
+		return *this;
+	}
+
 	int get_element(int id) {
-		if (id >= size_) {
+		if (id >= capacity) {
 			throw std::exception("wrong index");
 		}
 		return s_m[id];
 	}
 
-	smart_array(const smart_array& other) {
-		*this = other;
-	}
-
-	smart_array& operator=(const smart_array& other) {	
-		delete s_m;
-		if (other.s_m == nullptr)s_m = nullptr;
-		else s_m = new int(*other.s_m);
-		return *this;
-	}
-
 	~smart_array() {
-		delete s_m;
+		delete[] s_m;
 	}
 private:
 	int* s_m = nullptr;
-	int size_ = 0;
 	int capacity = 0;
 	int i = 0;
 };
