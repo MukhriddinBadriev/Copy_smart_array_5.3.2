@@ -27,10 +27,20 @@ public:
 	}
 
 	smart_array& operator=(const smart_array& other) {
-		delete s_m;
-		if (other.s_m == nullptr)s_m = nullptr;
-		else s_m = new int(capacity);
+		if (this != &other) {
+			delete s_m;
+			if (other.s_m == nullptr) s_m = nullptr;
+			else { 
+				s_m = new int[other.capacity]; 
+				for (int i = 0; i < other.capacity; i++) {
+					s_m[i] = other.s_m[i];
+				}
+			}
+		}
 		return *this;
+	}
+	smart_array(const smart_array& other) {
+		*this = other;
 	}
 
 	int get_element(int id) {
