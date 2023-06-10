@@ -30,10 +30,11 @@ public:
 		if (this != &other) {
 			delete s_m;
 			if (other.s_m == nullptr) s_m = nullptr;
-			else { 
-				s_m = new int[other.capacity]; 
-				for (int i = 0; i < other.capacity; i++) {
-					s_m[i] = other.s_m[i];
+			else {
+				capacity = other.capacity;
+				s_m = new int[capacity]; 
+				for (int j = 0; j < capacity; j++) {
+					s_m[j] = other.s_m[j];
 				}
 			}
 		}
@@ -45,7 +46,7 @@ public:
 
 	int get_element(int id) {
 		if (id >= capacity) {
-			throw std::exception("wrong index");
+			throw std::exception("Wrong index");
 		}
 		return s_m[id];
 	}
@@ -70,7 +71,14 @@ int main() {
 		new_array.add_element(44);
 		new_array.add_element(34);
 
+
 		arr = new_array;
+
+		smart_array arr1(5);
+		arr1.add_element(100);
+
+		smart_array arr2(arr1);
+		std::cout << arr2.get_element(0);
 	}
 	catch (const std::exception& ex) {
 		std::cout << ex.what() << std::endl;
